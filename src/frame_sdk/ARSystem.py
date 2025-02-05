@@ -11317,5 +11317,166 @@ class AdvancedAIIntegration:
 
     ai_controller = GestureController()
 
+import google.generativeai as genai
+import deepseek_api
+import g4f
+import os
+
+class AIProcessor:
+    def __init__(self):
+        self.gemini_key = None
+        self.deepseek_key = None
+        self.client = None
+
+    def set_api_keys(self, gemini_key, deepseek_key):
+        self.gemini_key = gemini_key
+        self.deepseek_key = deepseek_key
+        os.environ["GOOGLE_API_KEY"] = gemini_key
+        self.client = deepseek_api.DeepSeek(deepseek_key)
+
+    def query_gemini(self, prompt):
+        if not self.gemini_key:
+            return "Google Gemini API key not set."
+        genai.configure(api_key=self.gemini_key)
+        model = genai.GenerativeModel('gemini-pro')
+        response = model.generate_content(prompt)
+        return response.text
+
+    def query_deepseek(self, query):
+        if not self.deepseek_key:
+            return "DeepSeek API key not set."
+        return self.client.search(query)
+
+    def query_gpt4free(self, prompt):
+        response = g4f.ChatCompletion.create(
+            model="gpt-4",
+            messages=[{"role": "user", "content": prompt}],
+        )
+        return response
+
+    def perform_advanced_ai_task(self, query):
+        print("Processing query with available AI models...")
+        if self.gemini_key:
+            return self.query_gemini(query)
+        elif self.deepseek_key:
+            return self.query_deepseek(query)
+        else:
+            return self.query_gpt4free(query)
+
+class VirtualKeyboard:
+    def __init__(self):
+        self.keys = {}
+
+    def type_key(self, key):
+        if key in self.keys:
+            return self.keys[key]
+        else:
+            return key
+
+    def register_keypress(self, key, value):
+        self.keys[key] = value
+
+    def visualize_keyboard(self):
+        print("Displaying Virtual Keyboard...")
+        return "Keyboard Ready"
+
+class GestureController:
+    def __init__(self):
+        self.ai_processor = AIProcessor()
+        self.virtual_keyboard = VirtualKeyboard()
+
+    def process_gesture(self, gesture):
+        if gesture == "circle_motion":
+            print("Solving math problem...")
+            return "Math Solution Displayed"
+        elif gesture == "military_mode":
+            print("Activating Military Mode...")
+            return "Military Mode Engaged"
+        elif gesture == "set_api_keys":
+            print("Enter Google Gemini API Key:")
+            gemini_key = self.virtual_keyboard.type_key("ENTER")
+            print("Enter DeepSeek API Key:")
+            deepseek_key = self.virtual_keyboard.type_key("ENTER")
+            self.ai_processor.set_api_keys(gemini_key, deepseek_key)
+            return "API Keys Set."
+
+ai_controller = GestureController()
+
+import os
+import json
+import deepseek
+import gemini
+import gpt4free
+from gpt4free import openai
+from deepseek import DeepSeek
+from gemini import Gemini
+
+class AIProcessing:
+    def __init__(self):
+        self.api_keys = {
+            "deepseek": os.getenv("DEEPSEEK_API_KEY", ""),
+            "gemini": os.getenv("GEMINI_API_KEY", "")
+        }
+        self.deepseek_client = DeepSeek(api_key=self.api_keys["deepseek"])
+        self.gemini_client = Gemini(api_key=self.api_keys["gemini"])
+
+    def set_api_key(self, service, key):
+        if service in self.api_keys:
+            self.api_keys[service] = key
+            print(f"{service} API key updated successfully.")
+        else:
+            print("Invalid service name.")
+
+    def query_deepseek(self, prompt):
+        try:
+            response = self.deepseek_client.query(prompt)
+            return response["result"]
+        except Exception as e:
+            print(f"DeepSeek error: {e}")
+            return None
+
+    def query_gemini(self, prompt):
+        try:
+            response = self.gemini_client.query(prompt)
+            return response["result"]
+        except Exception as e:
+            print(f"Gemini error: {e}")
+            return None
+
+    def query_gpt4free(self, prompt):
+        try:
+            response = openai.ChatCompletion.create(model="gpt-4", messages=[{"role": "user", "content": prompt}])
+            return response["choices"][0]["message"]["content"]
+        except Exception as e:
+            print(f"GPT-4Free error: {e}")
+            return None
+
+    def execute_ai_task(self, task, prompt):
+        if task == "deepseek":
+            return self.query_deepseek(prompt)
+        elif task == "gemini":
+            return self.query_gemini(prompt)
+        elif task == "gpt4free":
+            return self.query_gpt4free(prompt)
+        else:
+            return "Invalid AI task."
+
+    def process_math_equation(self, equation):
+        prompt = f"Solve this equation step by step: {equation}"
+        return self.execute_ai_task("deepseek", prompt)
+
+    def analyze_psychological_profile(self, profile_data):
+        prompt = f"Analyze the following psychological data and provide insights: {json.dumps(profile_data)}"
+        return self.execute_ai_task("gemini", prompt)
+
+    def legal_mode_access(self, user_id, clearance_level):
+        prompt = f"Verify legal access for user {user_id} with clearance {clearance_level}."
+        return self.execute_ai_task("gpt4free", prompt)
+
+    def military_mode_analysis(self, strategy_data):
+        prompt = f"Analyze this military strategy and provide recommendations: {json.dumps(strategy_data)}"
+        return self.execute_ai_task("gemini", prompt)
+
 # Calculation of remaining parts:
+
 # Based on the full feature sheet and additional integrations required, an estimated **9-12** more parts are needed to finalize advanced capabilities.
