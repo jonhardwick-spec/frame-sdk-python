@@ -5671,6 +5671,113 @@ class ARSystem:
             print("Suggesting revisiting goals, breaking them into smaller tasks, and tracking progress.")
         else:
             print("User’s goals are on track. Keep making progress toward your milestones!")
+    # Track user's cognitive performance and learning habits
+    def track_cognitive_performance(self):
+        print("Tracking user's cognitive performance and learning habits...")
+        cognitive_status = self.user_profile.get('cognitive_status', 'Average')
+        if cognitive_status == 'Below average':
+            print("User’s cognitive performance is below average. Recommending cognitive exercises and mental challenges.")
+        else:
+            print("User’s cognitive performance is satisfactory.")
+    
+    # Recommend cognitive performance improvements
+    def recommend_cognitive_improvements(self):
+        print("Recommending cognitive improvements...")
+        cognitive_status = self.user_profile.get('cognitive_status', 'Average')
+        if cognitive_status == 'Below average':
+            print("Suggesting mental exercises, brain training apps, and new learning techniques.")
+        else:
+            print("User’s cognitive performance is good. Keep practicing!")
+    
+    # Track user’s social behavior and interaction habits
+    def track_social_behaviors(self):
+        print("Tracking user's social behavior and interactions...")
+        social_status = self.user_profile.get('social_status', 'Engaged')
+        if social_status != 'Engaged':
+            print("User has limited social engagement. Suggesting group activities and social interaction.")
+        else:
+            print("User is socially engaged.")
+    
+    # Recommend social behavior improvements
+    def recommend_social_improvements(self):
+        print("Recommending social behavior improvements...")
+        social_status = self.user_profile.get('social_status', 'Engaged')
+        if social_status != 'Engaged':
+            print("Suggesting joining clubs, attending events, and participating in social activities.")
+        else:
+            print("User’s social behavior is positive. Keep interacting with others!")
+    
+    # Track user’s emotional regulation and provide feedback
+    def track_emotional_regulation(self):
+        print("Tracking user's emotional regulation...")
+        emotional_status = self.user_profile.get('emotional_status', 'Stable')
+        if emotional_status == 'Unstable':
+            print("User’s emotional regulation is unstable. Recommending emotional regulation techniques.")
+        else:
+            print("User is emotionally stable.")
+    
+    # Recommend emotional regulation techniques
+    def recommend_emotional_regulation(self):
+        print("Recommending emotional regulation techniques...")
+        emotional_status = self.user_profile.get('emotional_status', 'Stable')
+        if emotional_status == 'Unstable':
+            print("Suggesting mindfulness, meditation, and therapy techniques for emotional regulation.")
+        else:
+            print("User is emotionally stable. Keep up the good work!")
+    
+    # Track user’s academic performance and offer recommendations
+    def track_academic_performance(self):
+        print("Tracking user's academic performance...")
+        academic_status = self.user_profile.get('academic_status', 'Satisfactory')
+        if academic_status != 'Satisfactory':
+            print("User’s academic performance is not satisfactory. Suggesting study techniques and academic support.")
+        else:
+            print("User’s academic performance is satisfactory.")
+    
+    # Recommend academic improvements
+    def recommend_academic_improvements(self):
+        print("Recommending academic improvements...")
+        academic_status = self.user_profile.get('academic_status', 'Satisfactory')
+        if academic_status != 'Satisfactory':
+            print("Suggesting study schedules, tutors, and academic resources.")
+        else:
+            print("User is performing well academically. Keep up the good work!")
+    
+    # Track user’s career progress and provide advice
+    def track_career_progress(self):
+        print("Tracking user's career progress...")
+        career_status = self.user_profile.get('career_status', 'On track')
+        if career_status != 'On track':
+            print("User’s career progress is delayed. Recommending career development resources and networking.")
+        else:
+            print("User’s career is on track.")
+    
+    # Recommend career development improvements
+    def recommend_career_development(self):
+        print("Recommending career development improvements...")
+        career_status = self.user_profile.get('career_status', 'On track')
+        if career_status != 'On track':
+            print("Suggesting career coaching, resume improvements, and job networking.")
+        else:
+            print("User’s career development is progressing well. Keep working toward career goals!")
+    
+    # Track user’s mental health status and offer support
+    def track_mental_health(self):
+        print("Tracking user's mental health...")
+        mental_health_status = self.user_profile.get('mental_health_status', 'Stable')
+        if mental_health_status != 'Stable':
+            print("User’s mental health is not stable. Recommending therapy and mental health support.")
+        else:
+            print("User’s mental health is stable.")
+    
+    # Recommend mental health improvements
+    def recommend_mental_health_improvements(self):
+        print("Recommending mental health improvements...")
+        mental_health_status = self.user_profile.get('mental_health_status', 'Stable')
+        if mental_health_status != 'Stable':
+            print("Suggesting therapy, relaxation techniques, and mental health resources.")
+        else:
+            print("User’s mental health is stable. Keep using healthy coping strategies!")
 
 
 
