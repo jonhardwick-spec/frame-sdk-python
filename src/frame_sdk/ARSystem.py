@@ -5778,6 +5778,195 @@ class ARSystem:
             print("Suggesting therapy, relaxation techniques, and mental health resources.")
         else:
             print("User’s mental health is stable. Keep using healthy coping strategies!")
+            
+    # Monitor user's cognitive abilities and provide recommendations
+    def track_cognitive_abilities(self):
+        print("Tracking user's cognitive abilities...")
+        cognitive_status = self.user_profile.get('cognitive_status', 'Normal')
+        if cognitive_status != 'Normal':
+            print("User may experience cognitive decline. Recommending cognitive exercises.")
+        else:
+            print("User’s cognitive abilities are normal.")
+    
+    # Recommend cognitive improvement activities based on cognitive status
+    def recommend_cognitive_improvements(self):
+        print("Recommending cognitive improvements...")
+        cognitive_status = self.user_profile.get('cognitive_status', 'Normal')
+        if cognitive_status != 'Normal':
+            print("Suggesting brain games, puzzles, and memory exercises.")
+        else:
+            print("User’s cognitive abilities are normal. Keep up the good work!")
+    
+    # Track user's intellectual interests and provide recommendations
+    def track_intellectual_interests(self):
+        print("Tracking user's intellectual interests...")
+        intellectual_status = self.user_profile.get('intellectual_status', 'Engaged')
+        if intellectual_status != 'Engaged':
+            print("User may need to engage in more intellectual activities. Recommending reading and learning.")
+        else:
+            print("User’s intellectual interests are engaged.")
+    
+    # Recommend intellectual growth activities based on intellectual status
+    def recommend_intellectual_growth(self):
+        print("Recommending intellectual growth activities...")
+        intellectual_status = self.user_profile.get('intellectual_status', 'Engaged')
+        if intellectual_status != 'Engaged':
+            print("Suggesting online courses, books, and thought-provoking discussions.")
+        else:
+            print("User’s intellectual growth is on track. Keep it up!")
+    
+    # Track user’s emotional intelligence and provide insights
+    def track_emotional_intelligence(self):
+        print("Tracking user's emotional intelligence...")
+        emotional_intelligence_status = self.user_profile.get('emotional_intelligence_status', 'High')
+        if emotional_intelligence_status != 'High':
+            print("User may need to improve their emotional intelligence. Recommending self-reflection.")
+        else:
+            print("User’s emotional intelligence is high.")
+    
+    # Recommend emotional intelligence improvements based on emotional intelligence status
+    def recommend_emotional_intelligence_improvements(self):
+        print("Recommending emotional intelligence improvements...")
+        emotional_intelligence_status = self.user_profile.get('emotional_intelligence_status', 'High')
+        if emotional_intelligence_status != 'High':
+            print("Suggesting mindfulness, empathy exercises, and emotional awareness training.")
+        else:
+            print("User’s emotional intelligence is high. Keep practicing these skills!")
+    
+    # Track user’s resilience and provide recommendations
+    def track_resilience(self):
+        print("Tracking user's resilience...")
+        resilience_status = self.user_profile.get('resilience_status', 'Strong')
+        if resilience_status != 'Strong':
+            print("User may need to build resilience. Recommending stress resilience techniques.")
+        else:
+            print("User’s resilience is strong.")
+    
+    # Recommend resilience-building strategies based on resilience status
+    def recommend_resilience_building(self):
+        print("Recommending resilience-building strategies...")
+        resilience_status = self.user_profile.get('resilience_status', 'Strong')
+        if resilience_status != 'Strong':
+            print("Suggesting mental toughness exercises, problem-solving skills, and emotional regulation techniques.")
+        else:
+            print("User’s resilience is strong. Keep practicing these strategies!")
+    # Assessing and improving user’s resilience to stress
+    def assess_resilience(self):
+        print("Assessing user's resilience to stress...")
+        resilience_level = self.user_profile.get('resilience_level', 'Strong')
+        if resilience_level != 'Strong':
+            print("User may benefit from building stronger resilience strategies.")
+        else:
+            print("User’s resilience is strong. Keep practicing these strategies!")
+    
+    # Track user’s relationship quality and provide insights
+    def track_relationship_quality(self):
+        print("Tracking user's relationship quality...")
+        relationship_status = self.user_profile.get('relationship_status', 'Positive')
+        if relationship_status != 'Positive':
+            print("User may be facing relationship challenges. Recommending relationship counseling.")
+        else:
+            print("User’s relationship status is positive.")
+    
+    # Recommend relationship improvements based on relationship status
+    def recommend_relationship_improvements(self):
+        print("Recommending relationship improvements...")
+        relationship_status = self.user_profile.get('relationship_status', 'Positive')
+        if relationship_status != 'Positive':
+            print("Suggesting communication skills, conflict resolution strategies, and counseling.")
+        else:
+            print("User’s relationship is positive. Keep maintaining these healthy habits!")
+    
+    # Track user’s professional growth and provide insights
+    def track_professional_growth(self):
+        print("Tracking user's professional growth...")
+        professional_status = self.user_profile.get('professional_status', 'Growing')
+        if professional_status != 'Growing':
+            print("User may need to focus more on career development. Recommending skill-building.")
+        else:
+            print("User’s professional growth is on track.")
+    
+    # Recommend professional growth improvements based on professional status
+    def recommend_professional_growth(self):
+        print("Recommending professional growth improvements...")
+        professional_status = self.user_profile.get('professional_status', 'Growing')
+        if professional_status != 'Growing':
+            print("Suggesting networking, skill development, and career coaching.")
+        else:
+            print("User’s professional growth is on track. Keep up the momentum!")
+    
+    # Track user’s financial health and provide insights
+    def track_financial_health(self):
+        print("Tracking user's financial health...")
+        financial_status = self.user_profile.get('financial_status', 'Stable')
+        if financial_status != 'Stable':
+            print("User may need to work on improving their financial health. Recommending budgeting.")
+        else:
+            print("User’s financial health is stable.")
+    
+    # Recommend financial health improvements based on financial status
+    def recommend_financial_health_improvements(self):
+        print("Recommending financial health improvements...")
+        financial_status = self.user_profile.get('financial_status', 'Stable')
+        if financial_status != 'Stable':
+            print("Suggesting budgeting, saving strategies, and investment education.")
+        else:
+            print("User’s financial health is stable. Keep up the good work!")
+    
+    # Track user’s personal development and provide insights
+    def track_personal_development(self):
+        print("Tracking user's personal development...")
+        personal_status = self.user_profile.get('personal_status', 'Developing')
+        if personal_status != 'Developing':
+            print("User may need to focus on personal development. Recommending growth activities.")
+        else:
+            print("User’s personal development is progressing well.")
+    
+    # Recommend personal development improvements based on personal status
+    def recommend_personal_development(self):
+        print("Recommending personal development improvements...")
+        personal_status = self.user_profile.get('personal_status', 'Developing')
+        if personal_status != 'Developing':
+            print("Suggesting self-reflection, goal-setting, and self-care practices.")
+        else:
+            print("User’s personal development is progressing well. Keep growing!")
+    
+    # Track user’s self-awareness and provide insights
+    def track_self_awareness(self):
+        print("Tracking user's self-awareness...")
+        self_awareness_status = self.user_profile.get('self_awareness_status', 'High')
+        if self_awareness_status != 'High':
+            print("User may benefit from increasing self-awareness. Recommending introspective exercises.")
+        else:
+            print("User’s self-awareness is high.")
+    
+    # Recommend self-awareness improvements based on self-awareness status
+    def recommend_self_awareness_improvements(self):
+        print("Recommending self-awareness improvements...")
+        self_awareness_status = self.user_profile.get('self_awareness_status', 'High')
+        if self_awareness_status != 'High':
+            print("Suggesting journaling, mindfulness practices, and seeking feedback.")
+        else:
+            print("User’s self-awareness is high. Keep practicing mindfulness and reflection!")
+    
+    # Track user’s emotional intelligence and provide insights
+    def track_emotional_intelligence(self):
+        print("Tracking user's emotional intelligence...")
+        emotional_intelligence_status = self.user_profile.get('emotional_intelligence_status', 'Strong')
+        if emotional_intelligence_status != 'Strong':
+            print("User may benefit from improving emotional intelligence. Recommending emotional regulation techniques.")
+        else:
+            print("User’s emotional intelligence is strong.")
+    
+    # Recommend emotional intelligence improvements based on emotional intelligence status
+    def recommend_emotional_intelligence_improvements(self):
+        print("Recommending emotional intelligence improvements...")
+        emotional_intelligence_status = self.user_profile.get('emotional_intelligence_status', 'Strong')
+        if emotional_intelligence_status != 'Strong':
+            print("Suggesting empathy development, emotional regulation, and communication skills.")
+        else:
+            print("User’s emotional intelligence is strong. Keep practicing emotional awareness!")
+
 
 
 
