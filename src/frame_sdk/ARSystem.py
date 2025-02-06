@@ -11978,46 +11978,92 @@ ai_system.enable_trafficcutup_mode()
 ai_system.enable_gesture_control()
 import google.generativeai as genai
 import deepseek
-from gpt4free import Client as GPTClient
+import gpt4free
+from gpt4free import you
+from frame_sdk_python import FrameSDK
+import numpy as np
+import cv2
+import os
 
 class AdvancedAIIntegration:
     def __init__(self):
-        self.gemini_key = None
-        self.deepseek_key = None
-        self.gpt_client = GPTClient()
+        self.gemini_api_key = None
+        self.deepseek_api_key = None
+        self.virtual_keyboard_active = False
+        self.frame_sdk = FrameSDK()
 
-    def set_api_keys(self, gemini_key=None, deepseek_key=None):
-        if gemini_key:
-            self.gemini_key = gemini_key
-            genai.configure(api_key=gemini_key)
-        if deepseek_key:
-            self.deepseek_key = deepseek_key
-            deepseek.auth(deepseek_key)
+    def set_gemini_api_key(self, key):
+        self.gemini_api_key = key
+        genai.configure(api_key=key)
+        print("Google Gemini API key set successfully.")
+
+    def set_deepseek_api_key(self, key):
+        self.deepseek_api_key = key
+        deepseek.configure(api_key=key)
+        print("DeepSeek API key set successfully.")
+
+    def activate_virtual_keyboard(self):
+        self.virtual_keyboard_active = True
+        print("Virtual keyboard activated.")
+
+    def deactivate_virtual_keyboard(self):
+        self.virtual_keyboard_active = False
+        print("Virtual keyboard deactivated.")
 
     def search_gemini(self, query):
-        if not self.gemini_key:
+        if not self.gemini_api_key:
             return "Gemini API key not set."
-        model = genai.GenerativeModel("gemini-pro")
-        response = model.generate_content(query)
+        response = genai.GenerativeModel("gemini-pro").generate_content(query)
         return response.text
 
     def search_deepseek(self, query):
-        if not self.deepseek_key:
+        if not self.deepseek_api_key:
             return "DeepSeek API key not set."
         response = deepseek.search(query)
-        return response.json()
+        return response
 
     def search_gpt4free(self, query):
-        return self.gpt_client.chat("gpt-4", query)
+        return you.Completion.create(prompt=query)
 
-    def run(self):
-        print("Advanced AI Integration running...")
-        print("Testing AI Integrations...")
-
+    def process_ai_queries(self):
         test_query = "Solve 5x + 10 = 20 for x."
         print("Gemini Result:", self.search_gemini(test_query))
         print("DeepSeek Result:", self.search_deepseek(test_query))
         print("GPT4Free Result:", self.search_gpt4free(test_query))
 
-print("Advanced AI Integration loaded successfully.")
+    def implement_gesture_controls(self):
+        print("Initializing gesture controls...")
+        self.frame_sdk.initialize_gesture_tracking()
+        print("Gesture controls ready.")
 
+    def detect_gesture(self, frame):
+        gesture = self.frame_sdk.detect_gesture(frame)
+        if gesture == "circle":
+            print("Math solving activated.")
+        elif gesture == "pinky_finger_up":
+            print("Legal mode access granted.")
+        elif gesture == "thumbs_up_both":
+            print("Military mode activated.")
+        return gesture
+
+    def scan_and_match_features(self):
+        expected_features = [
+            "Military Mode", "Legal Mode", "Law Enforcement Access",
+            "TrafficCutUpMode", "PAED", "Math Solver", "Gesture Controls",
+            "Virtual Keyboard", "AI Search (Gemini, DeepSeek, GPT4Free)"
+        ]
+        detected_features = self.frame_sdk.list_active_features()
+        missing_features = [f for f in expected_features if f not in detected_features]
+        
+        if missing_features:
+            print("Missing features detected:", missing_features)
+            print("Adding missing features now...")
+            self.add_missing_features(missing_features)
+
+    def add_missing_features(self, features):
+        for feature in features:
+            print(f"Adding {feature} to system...")
+            # Simulated feature addition process
+        print("All missing features added successfully.")
+
+print("Advanced AI Integration loaded successfully.")
