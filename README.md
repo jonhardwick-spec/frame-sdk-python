@@ -1,173 +1,48 @@
-# Frame SDK for Python
-The Python SDK for the Frame AI glasses from [Brilliant Labs](https://github.com/brilliantlabsAR).  View on [PyPI](https://pypi.org/project/frame-sdk/).
+# nova.j540 on ig
+### Features Developed and Implemented:
+1. **Autistic Tool Memory**: Captures and stores information such as card details, IDs, passports, business cards, and handheld devices. Stores data for a maximum of 3 days and ensures encryption for safety. Access to this data is restricted to government authorities.
+   
+2. **TrafficCutUp Mode**: Assists the user in navigating through traffic, identifying openings, and suggesting optimal routes for efficient travel.
+   
+3. **Enhanced Psychological and Heuristic Analysis**: Collects data from visible individuals (IDs, mood, mental disorders, body language, etc.) and uses it for social and psychological profiling. Features data encryption for sensitive information.
+   
+4. **OCR & Number Gathering (OCD)**: Detects and captures numbers or strings of text from images or videos. Includes dynamic number tracking for financial or order-based information. Green outline feedback provided to users.
+   
+5. **Emergency Vehicle Detection (EVS)**: Detects police cars, ambulances, fire trucks, and other emergency vehicles. Alerts the user of detected vehicles’ directions for awareness.
+   
+6. **Social Media Integration**: Social media profile retrieval using images, names, and outfits. Captures social media handles and links to users for advanced social engineering and profiling.
+   
+7. **Gesture Recognition**: Custom gestures to control features like data capture, secure data access, and media control. Includes secure gestures for authorized government personnel.
+   
+8. **Secure Data Encryption & Storage**: Uses advanced encryption for all sensitive data, ensuring that only authorized personnel can decrypt and retrieve the data. Ensures access to secure data is logged for government use.
+   
+9. **PAED (Psychological Analysis Emotional Detection)**: Analyzes the emotional state and mood of individuals based on their behavior and expressions. Helps in determining honesty and trustworthiness through facial expression analysis.
+   
+10. **Data Retrieval by Law Enforcement**: Provides the ability for law enforcement or authorized government agents to retrieve stored data by entering the proper passcode, ensuring accountability.
+   
+11. **Secure Data Retrieval UI**: Allows authorized government personnel to scroll through collected profiles (like a TikTok feed) for ease of access to sensitive information when needed.
+   
+12. **Saturation and Exercise Mode**: Tracks the user’s health metrics, exercise habits, calories burned, and saturation levels based on food consumption and exercise routines. Provides feedback for optimal exercise and fitness performance.
+   
+13. **Aim Assist**: Improves targeting and accuracy through real-time analysis and assistance with visual recognition technology.
+   
+14. **Computer Vision & Recognition**: Extensive computer vision capabilities, recognizing objects, faces, and key details in the user’s environment to assist with various features.
+   
+15. **Secure Authentication**: Includes a secure authentication method for government officials with encrypted password and biometric recognition for emergency data retrieval.
 
-## Install
+---
 
-```sh
-pip3 install frame-sdk
-```
+### Features Currently Being Worked On:
+1. **DripDetection (Clothing Price Estimation)**: Detects individuals' clothing and estimates the price of their outfits using deep learning and reverse image search technologies. 
+   
+2. **Speech and Translation Capture**: Captures spoken conversations and translates them, ensuring they are securely stored for analysis and training purposes.
+   
+3. **Location & Vehicle Detection (Advanced)**: Integrating enhanced systems for detecting specific vehicle types and analyzing the location for optimized safety and law enforcement compliance.
 
-## Documentation
+4. **Social Media Post Integration for Profiling**: Currently integrating posts from social media (captured via the system) to inform psychological profiling, predictions, and heuristic analysis.
 
-Check out [the docs](https://docs.brilliant.xyz/frame/building-apps/) for complete guidance on everything you can do with the Frame.
+5. **User Interaction Prediction (Conversation Builder)**: Enhancing the system to predict user responses in social interactions based on gathered data and real-time analysis.
 
-## Relationship to `frame-utilities-for-python`
+6. **Government-Only Access & Logs**: Working on a more refined system for data access with logs and authentication for government personnel. This includes tracking all access points for legal reasons.
 
-The [`frame-utilities-for-python`](https://github.com/brilliantlabsAR/frame-utilities-for-python) package is for low-level communication with both Frame and Monocle devices and is a thin wrapper around the bluetooth connection, plus some internal tools that are used in the firmware preparation process.  This `frame-sdk` package is a higher-level SDK that provides a more convenient way for developers to build apps for Frame.
-
-It is recommended that you use this package for new projects, unless you have a specific need to use the lower-level `frame-utilities-for-python` package.
-
-## Examples
-
-Here's a simple example of how to use the Frame SDK to display text, take a photo, and more.
-
-```python
-import asyncio
-from frame_sdk import Frame
-from frame_sdk.display import Alignment, PaletteColors
-from frame_sdk.camera import Quality, AutofocusType
-import datetime
-
-async def main():
-    # the with statement handles the connection and disconnection to Frame
-    async with Frame() as f:
-        # you can access the lower-level bluetooth connection via f.bluetooth, although you shouldn't need to do this often
-        print(f"Connected: {f.bluetooth.is_connected()}")
-
-        # let's get the current battery level
-        print(f"Frame battery: {await f.get_battery_level()}%")
-
-        # let's write (or overwrite) the file greeting.txt with "Hello world".
-        # You can provide a bytes object or convert a string with .encode()
-        await f.files.write_file("greeting.txt", b"Hello world")
-
-        # And now we read that file back.
-        # Note that we should convert the bytearray to a string via the .decode() method.
-        print((await f.files.read_file("greeting.txt")).decode())
-        
-        # run_lua will automatically handle scripts that are too long for the MTU, so you don't need to worry about it.
-        # It will also automatically handle responses that are too long for the MTU automatically.
-        await f.run_lua("frame.display.text('Hello world', 50, 100);frame.display.show()")
-
-        # evaluate is equivalent to f.run_lua("print(\"1+2\"), await_print=True)
-        # It will also automatically handle responses that are too long for the MTU automatically.
-        print(await f.evaluate("1+2"))
-
-        print("Tap the Frame to continue...")
-        await f.display.show_text("Tap the Frame to take a photo", align=Alignment.MIDDLE_CENTER)
-        await f.motion.wait_for_tap()
-
-        # take a photo and save to disk
-        await f.display.show_text("Taking photo...", align=Alignment.MIDDLE_CENTER)
-        await f.camera.save_photo("frame-test-photo.jpg")
-        await f.display.show_text("Photo saved!", align=Alignment.MIDDLE_CENTER, color=PaletteColors.GREEN)
-        # or with more control
-        await f.camera.save_photo("frame-test-photo-2.jpg", autofocus_seconds=3, quality=Quality.HIGH, autofocus_type=AutofocusType.CENTER_WEIGHTED)
-        # or get the raw bytes
-        photo_bytes = await f.camera.take_photo(autofocus_seconds=1)
-
-        print("About to record until you stop talking")
-        await f.display.show_text("Say something...", align=Alignment.MIDDLE_CENTER)
-		# record audio to a file
-        length = await f.microphone.save_audio_file("test-audio.wav")
-        print(f"Recorded {length:01.1f} seconds: \"./test-audio.wav\"")
-        await f.display.show_text(f"Recorded {length:01.1f} seconds", align=Alignment.MIDDLE_CENTER)
-        await asyncio.sleep(3)
-
-        # or get the audio directly in memory
-        await f.display.show_text("Say something else...", align=Alignment.MIDDLE_CENTER)
-        audio_data = await f.microphone.record_audio(max_length_in_seconds=10)
-        await f.display.show_text(f"Playing back {len(audio_data) / f.microphone.sample_rate:01.1f} seconds of audio", align=Alignment.MIDDLE_CENTER)
-        # you can play back the audio on your computer
-        f.microphone.play_audio_background(audio_data)
-        # or process it using other audio handling libraries, upload to a speech-to-text service, etc.
-
-        print("Move around to track intensity of your motion")
-        await f.display.show_text("Move around to track intensity of your motion", align=Alignment.MIDDLE_CENTER)
-        intensity_of_motion = 0
-        prev_direction = await f.motion.get_direction()
-        for _ in range(10):
-            await asyncio.sleep(0.1)
-            direction = await f.motion.get_direction()
-            intensity_of_motion = max(intensity_of_motion, (direction-prev_direction).amplitude())
-            prev_direction = direction
-        print(f"Intensity of motion: {intensity_of_motion:01.2f}")
-        await f.display.show_text(f"Intensity of motion: {intensity_of_motion:01.2f}", align=Alignment.MIDDLE_CENTER)
-        print("Tap the Frame to continue...")
-        await f.motion.wait_for_tap()
-		
-        # Show the full palette
-        width = 640 // 4
-        height = 400 // 4
-        for color in range(0, 16):
-            tile_x = (color % 4)
-            tile_y = (color // 4)
-            await f.display.draw_rect(tile_x*width+1, tile_y*height+1, width, height, PaletteColors(color))
-            await f.display.write_text(f"{color}", tile_x*width+width//2+1, tile_y*height+height//2+1)
-        await f.display.show()
-
-        print("Tap the Frame to continue...")
-        await f.motion.wait_for_tap()
-
-        # scroll some long text
-        await f.display.scroll_text("Never gonna give you up\nNever gonna let you down\nNever gonna run around and desert you\nNever gonna make you cry\nNever gonna say goodbye\nNever gonna tell a lie and hurt you")
-
-        # display battery indicator and time as a home screen
-        batteryPercent = await f.get_battery_level()
-        # select a battery fill color from the default palette based on level
-        color = PaletteColors.RED if batteryPercent < 20 else PaletteColors.YELLOW if batteryPercent < 50 else PaletteColors.GREEN
-        # specify the size of the battery indicator in the top-right
-        batteryWidth = 150
-        batteryHeight = 75
-        # draw the endcap of the battery
-        await f.display.draw_rect(640-32,40 + batteryHeight//2-8, 32, 16, PaletteColors.WHITE)
-        # draw the battery outline
-        await f.display.draw_rect_filled(640-16-batteryWidth, 40-8, batteryWidth+16, batteryHeight+16, PaletteColors.WHITE, 1, 15)
-        # fill the battery based on level
-        await f.display.draw_rect(640-8-batteryWidth, 40, int(batteryWidth * 0.01 * batteryPercent), batteryHeight, color)
-        # write the battery level
-        await f.display.write_text(f"{batteryPercent}%", 640-8-batteryWidth, 40, batteryWidth, batteryHeight, Alignment.MIDDLE_CENTER)
-        # write the time and date in the center of the screen
-        await f.display.write_text(datetime.datetime.now().strftime("%#I:%M %p\n%a, %B %d, %Y").lstrip("0"), align=Alignment.MIDDLE_CENTER)
-        # now show what we've been drawing to the buffer
-        await f.display.show()
-
-        # set a wake screen via script, so when you tap to wake the frame, it shows the battery and time
-        await f.run_on_wake("""frame.display.text('Battery: ' .. frame.battery_level() ..  '%', 10, 10);
-                            if frame.time.utc() > 10000 then
-                                local time_now = frame.time.date();
-                                frame.display.text(time_now['hour'] .. ':' .. time_now['minute'], 300, 160);
-                                frame.display.text(time_now['month'] .. '/' .. time_now['day'] .. '/' .. time_now['year'], 300, 220) 
-                            end;
-                            frame.display.show();
-                            frame.sleep(10);
-                            frame.display.text(' ',1,1);
-                            frame.display.show();
-                            frame.sleep()""")
-
-        # tell frame to sleep after 10 seconds then clear the screen and go to sleep, without blocking for that
-        await f.run_lua("frame.sleep(10);frame.display.text(' ',1,1);frame.display.show();frame.sleep()")
-
-    print("disconnected")
-
-
-
-asyncio.run(main())
-
-```
-
-## Tests
-
-To run the unit tests, ensure you have pytest installed:
-
-```sh
-pip3 install pytest
-```
-
-With a Frame device in range, run:
-
-```sh
-python3 -m pytest tests/*
-```
-
-Note that one of the audio playback tests fails on Windows.
+---
