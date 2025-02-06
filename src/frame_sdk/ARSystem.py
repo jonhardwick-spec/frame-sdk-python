@@ -12332,6 +12332,7 @@ class LegalMode:
 # Full system integration with all modes
 class FullSystem:
     def __init__(self):
+        # Initialize advanced integrations
         self.advanced_integrations = AdvancedIntegrations()
         self.gesture_system = GestureControlSystem()
         self.traffic_mode = TrafficCutUpMode()
@@ -12339,11 +12340,18 @@ class FullSystem:
         self.legal_mode = LegalMode()
         self.virtual_keyboard = VirtualKeyboard()
 
+        # AI/ML integrations
+        self.ai_search = GoogleGeminiSearch(api_key="your_api_key")
+        self.deepseek = DeepSeekAPI(api_key="your_api_key")
+
     def initialize(self):
         print("Initializing Full System...")
         self.advanced_integrations.add_feature("Psychological Analysis")
         self.gesture_system.register_gesture("MilitaryMode", "Thumb Up")
         self.gesture_system.register_gesture("TrafficCutUp", "Swirl Gesture")
+        self.gesture_system.register_gesture("MathSolver", "Circle Gesture")
+        self.gesture_system.register_gesture("LegalMode", "Legal Tap")
+        self.gesture_system.register_gesture("VirtualKeyboard", "Tap Key")
 
     def run(self):
         print("Running Full System...")
@@ -12351,8 +12359,31 @@ class FullSystem:
         self.traffic_mode.calculate_traffic_path("current_position_example")
         self.military_mode.authenticate("valid_key")
         self.legal_mode.authenticate("valid_id")
+        
+        # Running AI/ML tasks
+        math_query = "Solve integral of x^2 + 3x"
+        ai_math_result = self.ai_search.query(math_query)
+        print(f"AI Math Result: {ai_math_result}")
+
+        # Perform a DeepSeek query
+        deepseek_result = self.deepseek.query("law enforcement access")
+        print(f"DeepSeek Law Enforcement Result: {deepseek_result}")
+
+    def set_api_keys(self, gemini_api_key, deepseek_api_key):
+        self.ai_search.set_api_key(gemini_api_key)
+        self.deepseek.set_api_key(deepseek_api_key)
 
 # Instantiate and run the system
 system = FullSystem()
 system.initialize()
 system.run()
+
+# Feature List:
+# 1. Full integration with Military Mode, Legal Mode, and TrafficCutUpMode
+# 2. AI/ML functionality integrated via Google Gemini and DeepSeek APIs
+# 3. Psychological analysis and feedback via advanced integrations
+# 4. Gesture control for military mode, math solving (circle gesture), legal access (tap), and virtual keyboard
+# 5. Virtual keyboard for key tapping recognition
+# 6. AI-driven math solver integration using Google Gemini
+# 7. DeepSeek integration for law enforcement and legal queries
+# 8. API key management for Google Gemini and DeepSeek via VirtualKeyboard
