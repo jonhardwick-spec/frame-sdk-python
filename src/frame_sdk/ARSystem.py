@@ -11976,53 +11976,111 @@ ai_system.execute_features()
 ai_system.enable_military_mode()
 ai_system.enable_trafficcutup_mode()
 ai_system.enable_gesture_control()
-
 import os
 import openai
 import deepseek
 from google_gemini import GeminiClient
-from gpt4free import Provider, ChatCompletion
+from gpt4free import gpt4free
 from frame_sdk import Frame
-from virtual_keyboard import VirtualKeyboard
+import cv2
+import numpy as np
 
 class AdvancedAIIntegration:
     def __init__(self, user_profile):
         self.user_profile = user_profile
-        self.deepseek_api_key = os.getenv('DEEPSEEK_API_KEY')
-        self.gemini_api_key = os.getenv('GEMINI_API_KEY')
+        self.gemini_client = None
+        self.deepseek_client = None
         self.frame = Frame()
-        self.virtual_keyboard = VirtualKeyboard()
+        self.api_keys = {
+            'gemini': None,
+            'deepseek': None
+        }
 
-    def set_api_keys(self, deepseek_key=None, gemini_key=None):
-        if deepseek_key:
-            self.deepseek_api_key = deepseek_key
-            os.environ['DEEPSEEK_API_KEY'] = deepseek_key
-        if gemini_key:
-            self.gemini_api_key = gemini_key
-            os.environ['GEMINI_API_KEY'] = gemini_key
+    def set_api_key(self, service, key):
+        if service in self.api_keys:
+            self.api_keys[service] = key
+            print(f"{service.capitalize()} API key set successfully.")
+        else:
+            print(f"Service {service} not recognized.")
 
-    def deepseek_query(self, prompt):
-        if not self.deepseek_api_key:
-            raise ValueError("DeepSeek API key is not set.")
-        client = deepseek.Client(api_key=self.deepseek_api_key)
-        response = client.chat_completions.create(
-            model="deepseek-chat",
-            messages=[{"role": "system", "content": "You are a helpful assistant."},
-                      {"role": "user", "content": prompt}],
-            stream=False
-        )
-        return response.choices[0].message.content
+    def initialize_gemini_client(self):
+        if self.api_keys['gemini']:
+            self.gemini_client = GeminiClient(api_key=self.api_keys['gemini'])
+            print("Gemini client initialized.")
+        else:
+            print("Gemini API key not set.")
 
-    def gemini_query(self, prompt):
-        if not self.gemini_api_key:
-            raise ValueError("Google Gemini API key is not set.")
-        client = GeminiClient(api_key=self.gemini_api_key)
-        response = client.generate_text(prompt)
-        return response['text']
+    def initialize_deepseek_client(self):
+        if self.api_keys['deepseek']:
+            self.deepseek_client = deepseek.Client(api_key=self.api_keys['deepseek'])
+            print("DeepSeek client initialized.")
+        else:
+            print("DeepSeek API key not set.")
 
-    def gpt4free_query(self, prompt):
-        response = ChatCompletion.create(Provider.DeepAI, prompt=prompt)
-        return response['text']
+    def perform_gemini_search(self, query):
+        if self.gemini_client:
+            response = self.gemini_client.search(query)
+            return response
+        else:
+            print("Gemini client not initialized.")
+            return None
+
+    def perform_deepseek_search(self, query):
+        if self.deepseek_client:
+            response = self.deepseek_client.search(query)
+            return response
+        else:
+            print("DeepSeek client not initialized.")
+            return None
+
+    def perform_gpt4free_query(self, query):
+        response = gpt4free.query(query)
+        return response
+
+    def gesture_control(self):
+        cap = cv2.VideoCapture(0)
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                break
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+            _, thresh = cv2.threshold(blurred, 60, 255, cv2.THRESH_BINARY)
+            contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            for contour in contours:
+                if cv2.contourArea(contour) > 5000:
+                    hull = cv2.convexHull(contour)
+                    cv2.drawContours(frame, [hull], -1, (0, 255, 0), 2)
+                    # Implement gesture recognition logic here
+            cv2.imshow('Gesture Control', frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+        cap.release()
+        cv2.destroyAllWindows()
+
+    def virtual_keyboard(self):
+        # Implement virtual keyboard functionality here
+        pass
+
+    def military_mode(self):
+        # Implement military mode features here
+        pass
+
+    def legal_mode(self):
+        # Implement legal mode features here
+        pass
+
+    def law_enforcement_access(self):
+        # Implement law enforcement access features here
+        pass
+
+    def traffic_cut_up_mode(self):
+        # Implement traffic cut-up mode features here
+        pass
+
+    def paed_mode(self):
+        # Implement PAED mode features here
+        pass
 
     def run(self):
         print("Advanced AI Integration running...")
@@ -12030,6 +12088,4 @@ class AdvancedAIIntegration:
         # This is a placeholder for the actual implementation
 
 print("Advanced AI Integration loaded successfully.")
-
-
 
