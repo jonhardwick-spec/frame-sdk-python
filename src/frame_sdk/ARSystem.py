@@ -12365,9 +12365,9 @@ class FullSystem:
         ai_math_result = self.ai_search.query(math_query)
         print(f"AI Math Result: {ai_math_result}")
 
-        # Perform a DeepSeek query
-        deepseek_result = self.deepseek.query("law enforcement access")
-        print(f"DeepSeek Law Enforcement Result: {deepseek_result}")
+          # Perform a DeepSeek query
+          deepseek_result = self.deepseek.query("law enforcement access")
+          print(f"DeepSeek Law Enforcement Result: {deepseek_result}")
 
     def set_api_keys(self, gemini_api_key, deepseek_api_key):
         self.ai_search.set_api_key(gemini_api_key)
@@ -12377,6 +12377,112 @@ class FullSystem:
 system = FullSystem()
 system.initialize()
 system.run()
+
+    # Implement Google Gemini search for advanced queries
+    def google_gemini_query(self, query):
+        print(f"Performing Google Gemini search for: {query}")
+        gemini_result = self.ai_search.query(query)
+        print(f"Google Gemini Result: {gemini_result}")
+        return gemini_result
+    
+    # Implement GPT-4-free integration for advanced conversations
+    def gpt4free_conversation(self, prompt):
+        print(f"Initiating GPT-4 conversation with prompt: {prompt}")
+        gpt4_result = self.gpt4free.query(prompt)
+        print(f"GPT-4 Free Result: {gpt4_result}")
+        return gpt4_result
+    
+    # Handle AI-assisted math calculation
+    def ai_math_calculation(self, equation):
+        print(f"Performing AI-assisted math calculation for: {equation}")
+        math_result = self.math_solver.solve(equation)
+        print(f"Math Calculation Result: {math_result}")
+        return math_result
+
+    # Implement offline math calculation using local algorithms
+    def local_math_calculation(self, equation):
+        print(f"Performing local math calculation for: {equation}")
+        # Implement local math solving algorithm here
+        math_result = self.calculate_locally(equation)
+        print(f"Local Math Calculation Result: {math_result}")
+        return math_result
+
+    # AI search with advanced reasoning for math problems
+    def ai_search_math(self, equation):
+        print(f"Performing AI search for math problem: {equation}")
+        search_result = self.ai_search.query(f"math calculation for {equation}")
+        print(f"AI Search Math Result: {search_result}")
+        return search_result
+
+    # TrafficCutUpMode for advanced driving assistance
+    def traffic_cut_up_mode(self):
+        print("Activating TrafficCutUpMode for advanced driving assistance...")
+        self.optimize_traffic_path()
+
+    # Implement optimization for traffic path based on vehicle speed and traffic flow
+    def optimize_traffic_path(self):
+        print("Optimizing traffic path based on current conditions...")
+        # Perform traffic optimization calculations (local logic)
+        optimized_path = self.calculate_traffic_path()
+        print(f"Optimized Traffic Path: {optimized_path}")
+
+    # Paed feature for advanced legal and tracking functionalities
+    def paed_feature(self):
+        print("Activating Paed feature for advanced legal checks and analytics...")
+        self.legal_assistance()
+    
+    # Implement legal assistance and document tracking for Paed feature
+    def legal_assistance(self):
+        print("Performing legal assistance check and document tracking...")
+        # Perform legal document checks (local implementation)
+        legal_documents = self.check_legal_documents()
+        print(f"Legal Documents Found: {legal_documents}")
+    
+    # Gesture control for Military Mode, Legal Mode, Math Solving, and others
+    def gesture_control(self):
+        print("Tracking and processing user gestures for control...")
+        # Implement gesture recognition and feature toggling based on gestures
+        self.process_gesture()
+
+    # Process gestures for feature toggling
+    def process_gesture(self):
+        print("Processing gestures for feature toggling...")
+        # Local implementation for recognizing specific gestures (e.g., circling for math)
+        gesture_result = self.detect_gesture()
+        print(f"Gesture Result: {gesture_result}")
+    
+    # Detect specific gestures for toggling features
+    def detect_gesture(self):
+        # Implement gesture detection logic here
+        return "Detected Gesture"
+
+    # Virtual Keyboard for user input and API key entry
+    def virtual_keyboard(self):
+        print("Displaying virtual keyboard for user input...")
+        self.capture_key_input()
+
+    # Capture key input and process it
+    def capture_key_input(self):
+        print("Capturing key input from virtual keyboard...")
+        # Implement key capture and processing (local logic)
+        key_input = self.get_key_input()
+        print(f"Key Input Captured: {key_input}")
+
+    # Get key input from user
+    def get_key_input(self):
+        # Local key capture logic
+        return "User Input Key"
+
+    # Perform calculations for advanced functions locally
+    def calculate_locally(self, equation):
+        print(f"Performing local calculation for: {equation}")
+        # Implement algorithm for local math calculation (advanced)
+        return eval(equation)
+
+    # Perform traffic path calculation (local)
+    def calculate_traffic_path(self):
+        # Local logic for calculating optimized traffic path
+        return "Optimized Traffic Path Calculated"
 
 # Feature List:
 # 1. Full integration with Military Mode, Legal Mode, and TrafficCutUpMode
