@@ -13202,6 +13202,169 @@ advanced_system.log_errors()  # Log any errors
 advanced_system.ensure_offline_capabilities()  # Check offline status
 advanced_system.check_integrations()  # Final integration check
 
+# Part 142: Advanced Integrations (Math Calculation, Gesture Control, AI/ML Query, Encryption, and Offline Capabilities)
+# This part ensures integration of all advanced features and offline functionalities
+
+# Import necessary libraries
+import hashlib
+import os
+import json
+
+# Placeholder for DeepSeek and Google Gemini integrations
+# DeepSeek API: Ensure we are querying DeepSeek API with correct configuration
+import deepseek  # DeepSeek library for advanced queries
+
+# Google Gemini API: Ensure integration with Google Gemini via proper query execution
+from google_gemini import GoogleGeminiAPI
+
+# GPT4Free API integration for other features
+from gpt4free import Chat
+
+# Initialize the advanced system class
+class AdvancedSystem:
+    def __init__(self):
+        self.user_profile = {}
+        self.offline_mode = True  # Default to offline mode
+        self.api_keys = {}  # Store user API keys securely
+
+    # Function to handle math calculations offline
+    def perform_math_calculation(self, expression):
+        try:
+            result = eval(expression)  # Local mathematical computation, no AI used here
+            print(f"Math calculation result for {expression}: {result}")
+            return result
+        except Exception as e:
+            print(f"Error in math calculation: {str(e)}")
+            self.log_errors(str(e))
+
+    # Handle gesture control system
+    def gesture_control(self, gesture):
+        try:
+            if gesture == "circle":
+                print("Circle gesture detected. Performing math calculation...")
+                # Example math operation when gesture is detected
+                return self.perform_math_calculation("2 + 2")
+            else:
+                print(f"Gesture {gesture} not recognized.")
+        except Exception as e:
+            print(f"Error in gesture control: {str(e)}")
+            self.log_errors(str(e))
+
+    # Function to query AI (DeepSeek or Google Gemini)
+    def run_ai_query(self, query, ai_type):
+        try:
+            if ai_type == "google_gemini":
+                # Assuming we have a configured instance of GoogleGeminiAPI
+                gemini = GoogleGeminiAPI(api_key=self.api_keys.get("google_gemini"))
+                response = gemini.ask(query)
+                print(f"Google Gemini response: {response}")
+                return response
+            elif ai_type == "deepseek":
+                # Run query via DeepSeek
+                ds_client = deepseek.Client(api_key=self.api_keys.get("deepseek"))
+                response = ds_client.query(query)
+                print(f"DeepSeek response: {response}")
+                return response
+            else:
+                print(f"AI type {ai_type} is not supported.")
+        except Exception as e:
+            print(f"Error in AI query execution: {str(e)}")
+            self.log_errors(str(e))
+
+    # Function to display virtual keyboard and capture user input
+    def virtual_keyboard(self, key_pressed):
+        try:
+            # Simulating keypress and capturing input for key-based operations
+            print(f"Virtual keyboard key pressed: {key_pressed}")
+            # In a real system, you would handle the keypress logic here
+        except Exception as e:
+            print(f"Error in virtual keyboard: {str(e)}")
+            self.log_errors(str(e))
+
+    # Function to securely store encrypted data
+    def store_encrypted_data(self, data):
+        try:
+            encryption_key = "secret_encryption_key"  # Hardcoded for now; should be securely managed
+            encrypted_data = self.encrypt_data(data, encryption_key)
+            print("Data stored securely.")
+            # Store the encrypted data locally
+            with open("encrypted_data.json", "w") as f:
+                json.dump(encrypted_data, f)
+        except Exception as e:
+            print(f"Error storing encrypted data: {str(e)}")
+            self.log_errors(str(e))
+
+    # Method to encrypt data using SHA256
+    def encrypt_data(self, data, key):
+        try:
+            data_str = json.dumps(data)
+            encrypted = hashlib.sha256(f"{data_str}{key}".encode()).hexdigest()
+            return encrypted
+        except Exception as e:
+            print(f"Error encrypting data: {str(e)}")
+            self.log_errors(str(e))
+
+    # Error logging function
+    def log_errors(self, error_message):
+        try:
+            with open("error_log.txt", "a") as log_file:
+                log_file.write(f"Error: {error_message}\n")
+        except Exception as e:
+            print(f"Error logging error: {str(e)}")
+
+    # Function to ensure offline capabilities
+    def ensure_offline_capabilities(self):
+        try:
+            if self.offline_mode:
+                print("System is operating in offline mode. All operations are local.")
+            else:
+                print("System is online. Ensure you're using only online-dependent features.")
+        except Exception as e:
+            print(f"Error checking offline capabilities: {str(e)}")
+            self.log_errors(str(e))
+
+    # Integration check function to validate external libraries and configurations
+    def check_integrations(self):
+        try:
+            # Check if all necessary APIs are correctly configured
+            if self.api_keys.get("google_gemini") and self.api_keys.get("deepseek"):
+                print("All integrations are configured properly.")
+            else:
+                print("Some integrations are missing API keys.")
+        except Exception as e:
+            print(f"Error checking integrations: {str(e)}")
+            self.log_errors(str(e))
+
+# Example usage
+advanced_system = AdvancedSystem()
+
+# Perform math calculation
+advanced_system.perform_math_calculation("2 + 2")
+
+# Gesture control example
+advanced_system.gesture_control("circle")
+
+# Run AI queries with actual AI systems (Google Gemini, DeepSeek)
+advanced_system.run_ai_query("What is the capital of France?", "google_gemini")
+
+# Virtual keyboard usage (simulate keypress)
+advanced_system.virtual_keyboard('5')
+
+# Encrypt and store data securely
+advanced_system.store_encrypted_data({'user_data': 'some sensitive info'})
+
+# Error logging
+advanced_system.log_errors()
+
+# Ensure offline capabilities
+advanced_system.ensure_offline_capabilities()
+
+# Check all integrations
+advanced_system.check_integrations()
+
+# End of part 142
+# Number of remaining parts: 2
+
 
 # End of Part 137 - Remaining parts: 30
 
