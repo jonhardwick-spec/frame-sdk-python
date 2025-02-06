@@ -11981,70 +11981,48 @@ import os
 import openai
 import deepseek
 from google_gemini import GeminiClient
-from gpt4free import gpt4free
-from gpt4free.providers import deepai
+from gpt4free import Provider, ChatCompletion
+from frame_sdk import Frame
+from virtual_keyboard import VirtualKeyboard
 
 class AdvancedAIIntegration:
     def __init__(self, user_profile):
         self.user_profile = user_profile
-        self.gemini_client = None
-        self.deepseek_client = None
-        self.gpt4free_client = None
-        self.api_keys = {
-            'google_gemini': None,
-            'deepseek': None
-        }
+        self.deepseek_api_key = os.getenv('DEEPSEEK_API_KEY')
+        self.gemini_api_key = os.getenv('GEMINI_API_KEY')
+        self.frame = Frame()
+        self.virtual_keyboard = VirtualKeyboard()
 
-    def set_api_key(self, service_name, api_key):
-        if service_name in self.api_keys:
-            self.api_keys[service_name] = api_key
-            print(f"{service_name} API key set successfully.")
-        else:
-            print(f"Service {service_name} is not recognized.")
+    def set_api_keys(self, deepseek_key=None, gemini_key=None):
+        if deepseek_key:
+            self.deepseek_api_key = deepseek_key
+            os.environ['DEEPSEEK_API_KEY'] = deepseek_key
+        if gemini_key:
+            self.gemini_api_key = gemini_key
+            os.environ['GEMINI_API_KEY'] = gemini_key
 
-    def initialize_clients(self):
-        if self.api_keys['google_gemini']:
-            self.gemini_client = GeminiClient(api_key=self.api_keys['google_gemini'])
-            print("Google Gemini client initialized.")
-        else:
-            print("Google Gemini API key not set.")
+    def deepseek_query(self, prompt):
+        if not self.deepseek_api_key:
+            raise ValueError("DeepSeek API key is not set.")
+        client = deepseek.Client(api_key=self.deepseek_api_key)
+        response = client.chat_completions.create(
+            model="deepseek-chat",
+            messages=[{"role": "system", "content": "You are a helpful assistant."},
+                      {"role": "user", "content": prompt}],
+            stream=False
+        )
+        return response.choices[0].message.content
 
-        if self.api_keys['deepseek']:
-            self.deepseek_client = deepseek.Client(api_key=self.api_keys['deepseek'])
-            print("DeepSeek client initialized.")
-        else:
-            print("DeepSeek API key not set.")
+    def gemini_query(self, prompt):
+        if not self.gemini_api_key:
+            raise ValueError("Google Gemini API key is not set.")
+        client = GeminiClient(api_key=self.gemini_api_key)
+        response = client.generate_text(prompt)
+        return response['text']
 
-        self.gpt4free_client = gpt4free.Client(provider=deepai)
-        print("GPT4Free client initialized with DeepAI provider.")
-
-    def perform_advanced_query(self, query):
-        if self.gemini_client:
-            try:
-                gemini_response = self.gemini_client.search(query)
-                print("Google Gemini Response:", gemini_response)
-            except Exception as e:
-                print("Error with Google Gemini:", e)
-        else:
-            print("Google Gemini client is not initialized.")
-
-        if self.deepseek_client:
-            try:
-                deepseek_response = self.deepseek_client.chat.completions.create(
-                    model="deepseek-chat",
-                    messages=[{"role": "user", "content": query}]
-                )
-                print("DeepSeek Response:", deepseek_response.choices[0].message.content)
-            except Exception as e:
-                print("Error with DeepSeek:", e)
-        else:
-            print("DeepSeek client is not initialized.")
-
-        try:
-            gpt4free_response = self.gpt4free_client.get_answer(query)
-            print("GPT4Free Response:", gpt4free_response)
-        except Exception as e:
-            print("Error with GPT4Free:", e)
+    def gpt4free_query(self, prompt):
+        response = ChatCompletion.create(Provider.DeepAI, prompt=prompt)
+        return response['text']
 
     def run(self):
         print("Advanced AI Integration running...")
@@ -12052,4 +12030,6 @@ class AdvancedAIIntegration:
         # This is a placeholder for the actual implementation
 
 print("Advanced AI Integration loaded successfully.")
+
+
 
