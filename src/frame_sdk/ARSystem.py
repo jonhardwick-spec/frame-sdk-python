@@ -11909,23 +11909,147 @@ class AdvancedAIIntegration:
     ai_system.enable_military_mode()
     ai_system.enable_trafficcutup_mode()
     ai_system.enable_gesture_control()
+    
+import google.generativeai as genai
+import deepseek
+import g4f
 
-    num_remaining_parts = 10  # Estimated number of parts required for finalization
-    num_remaining_classes = 3  # Estimated number of additional classes required
+class FeatureIntegration:
+    def __init__(self):
+        self.api_keys = {
+            "gemini": None,
+            "deepseek": None
+        }
+        self.virtual_keyboard_active = False
+        self.military_mode = False
+        self.trafficcutup_mode = False
+        self.gesture_control = False
 
-# Estimated Parts Remaining: 5 More Parts
-# Estimated Classes Until Completion: 1 Additional Class
+    def set_api_key(self, service, key):
+        if service in self.api_keys:
+            self.api_keys[service] = key
+            print(f"{service} API key set successfully.")
+        else:
+            print("Invalid service name.")
 
-    # Calculate remaining parts based on complexity and feature integration
-    remaining_parts = 15  # Estimate for full advanced capabilities integration
+    def activate_virtual_keyboard(self, key_pressed):
+        print(f"Virtual Key Pressed: {key_pressed}")
 
-    print(f"Remaining parts for advanced capabilities: {remaining_parts}")
+    def enable_military_mode(self):
+        self.military_mode = True
+        print("Military mode activated.")
 
-# Estimated remaining parts for full AI/ML, legal, military, and trafficcutup integration: 8-12 parts
+    def enable_trafficcutup_mode(self):
+        self.trafficcutup_mode = True
+        print("Traffic Cut-Up mode activated.")
 
+    def enable_gesture_control(self):
+        self.gesture_control = True
+        print("Gesture control activated.")
 
-# Estimated additional parts: 6-8 for full advanced capability integration.
+    def query_gemini(self, prompt):
+        if not self.api_keys["gemini"]:
+            return "Gemini API key not set."
+        genai.configure(api_key=self.api_keys["gemini"])
+        response = genai.generate_text(prompt)
+        return response.text
 
-# Calculation of remaining parts:
+    def query_deepseek(self, prompt):
+        if not self.api_keys["deepseek"]:
+            return "DeepSeek API key not set."
+        deepseek_client = deepseek.Client(api_key=self.api_keys["deepseek"])
+        response = deepseek_client.search(prompt)
+        return response.get("answer", "No response.")
 
-# Based on the full feature sheet and additional integrations required, an estimated **9-12** more parts are needed to finalize advanced capabilities.
+    def query_gpt4free(self, prompt):
+        response = g4f.ChatCompletion.create(
+            model=g4f.models.default,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return response if response else "No response."
+
+    def execute_features(self):
+        print("Executing all integrated features...")
+
+ai_system = FeatureIntegration()
+ai_system.execute_features()
+ai_system.enable_military_mode()
+ai_system.enable_trafficcutup_mode()
+ai_system.enable_gesture_control()
+
+import os
+import openai
+import deepseek
+from google_gemini import GeminiClient
+from gpt4free import gpt4free
+from gpt4free.providers import deepai
+
+class AdvancedAIIntegration:
+    def __init__(self, user_profile):
+        self.user_profile = user_profile
+        self.gemini_client = None
+        self.deepseek_client = None
+        self.gpt4free_client = None
+        self.api_keys = {
+            'google_gemini': None,
+            'deepseek': None
+        }
+
+    def set_api_key(self, service_name, api_key):
+        if service_name in self.api_keys:
+            self.api_keys[service_name] = api_key
+            print(f"{service_name} API key set successfully.")
+        else:
+            print(f"Service {service_name} is not recognized.")
+
+    def initialize_clients(self):
+        if self.api_keys['google_gemini']:
+            self.gemini_client = GeminiClient(api_key=self.api_keys['google_gemini'])
+            print("Google Gemini client initialized.")
+        else:
+            print("Google Gemini API key not set.")
+
+        if self.api_keys['deepseek']:
+            self.deepseek_client = deepseek.Client(api_key=self.api_keys['deepseek'])
+            print("DeepSeek client initialized.")
+        else:
+            print("DeepSeek API key not set.")
+
+        self.gpt4free_client = gpt4free.Client(provider=deepai)
+        print("GPT4Free client initialized with DeepAI provider.")
+
+    def perform_advanced_query(self, query):
+        if self.gemini_client:
+            try:
+                gemini_response = self.gemini_client.search(query)
+                print("Google Gemini Response:", gemini_response)
+            except Exception as e:
+                print("Error with Google Gemini:", e)
+        else:
+            print("Google Gemini client is not initialized.")
+
+        if self.deepseek_client:
+            try:
+                deepseek_response = self.deepseek_client.chat.completions.create(
+                    model="deepseek-chat",
+                    messages=[{"role": "user", "content": query}]
+                )
+                print("DeepSeek Response:", deepseek_response.choices[0].message.content)
+            except Exception as e:
+                print("Error with DeepSeek:", e)
+        else:
+            print("DeepSeek client is not initialized.")
+
+        try:
+            gpt4free_response = self.gpt4free_client.get_answer(query)
+            print("GPT4Free Response:", gpt4free_response)
+        except Exception as e:
+            print("Error with GPT4Free:", e)
+
+    def run(self):
+        print("Advanced AI Integration running...")
+        # Main loop or logic to run the integration
+        # This is a placeholder for the actual implementation
+
+print("Advanced AI Integration loaded successfully.")
+
