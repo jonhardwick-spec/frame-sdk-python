@@ -12161,21 +12161,47 @@ class FullSystem:
     def __init__(self):
         self.advanced_integrations = AdvancedIntegrations()
         self.traffic_cutup = TrafficCutUpMode()
-    
+        self.virtual_keyboard = VirtualKeyboard()
+        self.military_mode = MilitaryMode()
+        self.legal_mode = LegalMode()
+        self.law_enforcement_access = LawEnforcementAccess()
+        self.math_solver = MathSolver()
+
     def initialize(self):
         self.advanced_integrations.set_gemini_api_key("YOUR_GEMINI_API_KEY")
         self.advanced_integrations.set_deepseek_api_key("YOUR_DEEPSEEK_API_KEY")
         self.traffic_cutup.activate_traffic_cutup()
+        self.virtual_keyboard.initialize_keyboard()
+        self.military_mode.activate_military_mode()
+        self.legal_mode.activate_legal_mode()
+        self.law_enforcement_access.activate_access()
 
     def run(self):
+        # AI Search with Gemini
         self.advanced_integrations.perform_ai_search("AI advancements")
         self.advanced_integrations.perform_ml_calculation([1, 2, 3, 4])
-        self.advanced_integrations.handle_user_input()
-        self.advanced_integrations.handle_military_mode()
-        self.advanced_integrations.handle_legal_mode()
-        self.advanced_integrations.handle_law_enforcement_access()
+
+        # Mathematical Solution (Example of solving an equation)
+        self.math_solver.solve("2x + 3 = 7")
+
+        # Handling Military Mode, Legal Mode, and Law Enforcement Access
+        self.military_mode.handle_military_operations()
+        self.legal_mode.handle_legal_operations()
+        self.law_enforcement_access.handle_access()
+
+        # Traffic Optimization with TrafficCutUp
         self.traffic_cutup.track_traffic_and_route()
 
+        # Virtual Keyboard input handling
+        self.virtual_keyboard.capture_user_input()
+
+        # Perform psychological analysis and report
+        self.advanced_integrations.perform_psychological_analysis()
+
+        # Generate report of all features and integrations
+        print("System is fully integrated and ready to assist.")
+        print(f"Current running features: {self.advanced_integrations.get_active_features()}")
+    
 # Instantiate and run the system
 system = FullSystem()
 system.initialize()
