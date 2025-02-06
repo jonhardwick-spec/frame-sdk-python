@@ -11976,116 +11976,48 @@ ai_system.execute_features()
 ai_system.enable_military_mode()
 ai_system.enable_trafficcutup_mode()
 ai_system.enable_gesture_control()
-import os
-import openai
+import google.generativeai as genai
 import deepseek
-from google_gemini import GeminiClient
-from gpt4free import gpt4free
-from frame_sdk import Frame
-import cv2
-import numpy as np
+from gpt4free import Client as GPTClient
 
 class AdvancedAIIntegration:
-    def __init__(self, user_profile):
-        self.user_profile = user_profile
-        self.gemini_client = None
-        self.deepseek_client = None
-        self.frame = Frame()
-        self.api_keys = {
-            'gemini': None,
-            'deepseek': None
-        }
+    def __init__(self):
+        self.gemini_key = None
+        self.deepseek_key = None
+        self.gpt_client = GPTClient()
 
-    def set_api_key(self, service, key):
-        if service in self.api_keys:
-            self.api_keys[service] = key
-            print(f"{service.capitalize()} API key set successfully.")
-        else:
-            print(f"Service {service} not recognized.")
+    def set_api_keys(self, gemini_key=None, deepseek_key=None):
+        if gemini_key:
+            self.gemini_key = gemini_key
+            genai.configure(api_key=gemini_key)
+        if deepseek_key:
+            self.deepseek_key = deepseek_key
+            deepseek.auth(deepseek_key)
 
-    def initialize_gemini_client(self):
-        if self.api_keys['gemini']:
-            self.gemini_client = GeminiClient(api_key=self.api_keys['gemini'])
-            print("Gemini client initialized.")
-        else:
-            print("Gemini API key not set.")
+    def search_gemini(self, query):
+        if not self.gemini_key:
+            return "Gemini API key not set."
+        model = genai.GenerativeModel("gemini-pro")
+        response = model.generate_content(query)
+        return response.text
 
-    def initialize_deepseek_client(self):
-        if self.api_keys['deepseek']:
-            self.deepseek_client = deepseek.Client(api_key=self.api_keys['deepseek'])
-            print("DeepSeek client initialized.")
-        else:
-            print("DeepSeek API key not set.")
+    def search_deepseek(self, query):
+        if not self.deepseek_key:
+            return "DeepSeek API key not set."
+        response = deepseek.search(query)
+        return response.json()
 
-    def perform_gemini_search(self, query):
-        if self.gemini_client:
-            response = self.gemini_client.search(query)
-            return response
-        else:
-            print("Gemini client not initialized.")
-            return None
-
-    def perform_deepseek_search(self, query):
-        if self.deepseek_client:
-            response = self.deepseek_client.search(query)
-            return response
-        else:
-            print("DeepSeek client not initialized.")
-            return None
-
-    def perform_gpt4free_query(self, query):
-        response = gpt4free.query(query)
-        return response
-
-    def gesture_control(self):
-        cap = cv2.VideoCapture(0)
-        while True:
-            ret, frame = cap.read()
-            if not ret:
-                break
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            blurred = cv2.GaussianBlur(gray, (5, 5), 0)
-            _, thresh = cv2.threshold(blurred, 60, 255, cv2.THRESH_BINARY)
-            contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-            for contour in contours:
-                if cv2.contourArea(contour) > 5000:
-                    hull = cv2.convexHull(contour)
-                    cv2.drawContours(frame, [hull], -1, (0, 255, 0), 2)
-                    # Implement gesture recognition logic here
-            cv2.imshow('Gesture Control', frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-        cap.release()
-        cv2.destroyAllWindows()
-
-    def virtual_keyboard(self):
-        # Implement virtual keyboard functionality here
-        pass
-
-    def military_mode(self):
-        # Implement military mode features here
-        pass
-
-    def legal_mode(self):
-        # Implement legal mode features here
-        pass
-
-    def law_enforcement_access(self):
-        # Implement law enforcement access features here
-        pass
-
-    def traffic_cut_up_mode(self):
-        # Implement traffic cut-up mode features here
-        pass
-
-    def paed_mode(self):
-        # Implement PAED mode features here
-        pass
+    def search_gpt4free(self, query):
+        return self.gpt_client.chat("gpt-4", query)
 
     def run(self):
         print("Advanced AI Integration running...")
-        # Main loop or logic to run the integration
-        # This is a placeholder for the actual implementation
+        print("Testing AI Integrations...")
+
+        test_query = "Solve 5x + 10 = 20 for x."
+        print("Gemini Result:", self.search_gemini(test_query))
+        print("DeepSeek Result:", self.search_deepseek(test_query))
+        print("GPT4Free Result:", self.search_gpt4free(test_query))
 
 print("Advanced AI Integration loaded successfully.")
 
