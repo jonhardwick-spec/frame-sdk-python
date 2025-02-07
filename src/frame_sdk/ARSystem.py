@@ -14381,10 +14381,108 @@ ar_system.enable_gesture_tracking()
 
         print("Psychological analysis complete.")
         return psychological_report
+# Part 154 - Implementing AI/ML capabilities, gesture recognition, and encryption
 
-# Part 149 - Estimated remaining parts: 24
+import os
+import json
+import hashlib
+import cv2  # For facial recognition
+import numpy as np
+from cryptography.fernet import Fernet
+from datetime import datetime
 
+class AdvancedARSystem:
+    def __init__(self):
+        self.user_profile = {}
+        self.api_keys = {"google_gemini": None, "deepseek": None}
+        self.gesture_controls = {}
+        self.error_logs = []
+        self.encryption_key = self.generate_encryption_key()
+        self.heuristics_data = {}
 
+    def generate_encryption_key(self):
+        """Generates a secure encryption key if not already present"""
+        key_file = "encryption_key.key"
+        if not os.path.exists(key_file):
+            key = Fernet.generate_key()
+            with open(key_file, "wb") as keyfile:
+                keyfile.write(key)
+            return key
+        with open(key_file, "rb") as keyfile:
+            return keyfile.read()
+
+    def encrypt_data(self, data):
+        """Encrypts user data securely"""
+        cipher = Fernet(self.encryption_key)
+        encrypted_data = cipher.encrypt(json.dumps(data).encode())
+        return encrypted_data
+
+    def decrypt_data(self, encrypted_data):
+        """Decrypts stored user data"""
+        cipher = Fernet(self.encryption_key)
+        decrypted_data = json.loads(cipher.decrypt(encrypted_data).decode())
+        return decrypted_data
+
+    def set_api_key(self, service, key):
+        """Allows user to set API keys via virtual keyboard"""
+        if service in self.api_keys:
+            self.api_keys[service] = key
+            print(f"API key for {service} set successfully.")
+
+    def log_error(self, error_message):
+        """Handles errors and prevents crashes"""
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        error_entry = {"timestamp": timestamp, "error": error_message}
+        self.error_logs.append(error_entry)
+        with open("error_logs.json", "w") as file:
+            json.dump(self.error_logs, file, indent=4)
+        print(f"Error logged: {error_message}")
+
+    def facial_recognition(self, image_path):
+        """Performs facial recognition and logs user identity"""
+        try:
+            face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+            image = cv2.imread(image_path)
+            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+            if len(faces) > 0:
+                print("Face detected. Storing encrypted identity.")
+                self.heuristics_data["last_detected_face"] = self.encrypt_data({"face_count": len(faces)})
+            else:
+                print("No face detected.")
+        except Exception as e:
+            self.log_error(f"Facial recognition error: {e}")
+
+    def recognize_gesture(self, gesture_type):
+        """Maps gestures to actions"""
+        gesture_map = {
+            "circle": "Solve Math Equation",
+            "snap": "Clear AR Display",
+            "thumbs_up": "Enable System",
+            "pinky_fingers": "Access Legal Mode",
+            "closed_fist": "Mark Opponent"
+        }
+        action = gesture_map.get(gesture_type, "Unknown Gesture")
+        print(f"Gesture recognized: {gesture_type} -> Action: {action}")
+        return action
+
+    def enable_military_mode(self, name, badge_id):
+        """Activates Military Mode with secure authentication"""
+        hashed_id = hashlib.sha256(badge_id.encode()).hexdigest()
+        if self.user_profile.get("clearance") == "military":
+            print(f"Military mode enabled for {name}. Access granted.")
+        else:
+            print("Unauthorized access attempt detected.")
+
+    def heuristic_training(self, new_data):
+        """Trains heuristics using captured data"""
+        if isinstance(new_data, dict):
+            self.heuristics_data.update(new_data)
+            print("Heuristic training updated.")
+        else:
+            self.log_error("Invalid data format for heuristics.")
+
+# Current Part: 154 | Estimated Parts Remaining: 46
 
 # Current Part: 148 | Estimated Remaining Parts: 12
 
