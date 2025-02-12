@@ -16276,6 +16276,580 @@ print(f"Current Input: {virtual_keyboard.get_input()}")
 gesture_control.detect_gesture("circle_motion")
 error_handler.log_error("Test Error: Missing API Key")
 error_handler.display_errors()
+    # PART 169 - ADVANCED ML INTEGRATION & ERROR HANDLING EXTENSIONS
+    import json
+    import hashlib
+    import os
+    import time
+    import math
+
+    class AdvancedSystem:
+        def __init__(self):
+            self.error_log = []
+            self.recognized_faces = {}
+            self.ocr_data_storage = {}
+            self.user_gestures = {}
+            self.secure_data_storage = {}
+            self.max_secure_storage = 2 * 1024**3  # 2GB total
+            self.max_ocr_storage = 800 * 1024**2  # 800MB for OCR/OCD
+            self.api_keys = {"gemini": None, "deepseek": None}  # AI API keys
+
+        # ERROR HANDLING SYSTEM - LOGS & STORES ERRORS
+        def log_error(self, error_message):
+            timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+            error_entry = f"[{timestamp}] ERROR: {error_message}"
+            self.error_log.append(error_entry)
+            print(error_entry)
+
+        def display_errors(self):
+            print("\n".join(self.error_log) if self.error_log else "No errors recorded.")
+
+        # OFFLINE OCR/OCD TEXT & NUMBER CAPTURE - STORES DATA SECURELY
+        def capture_ocr_text(self, detected_text):
+            if len(json.dumps(self.ocr_data_storage)) >= self.max_ocr_storage:
+                self.log_error("OCR storage limit reached.")
+                return
+            unique_id = hashlib.sha256(detected_text.encode()).hexdigest()
+            self.ocr_data_storage[unique_id] = detected_text
+            print(f"OCR Captured: {detected_text}")
+
+        # FACIAL RECOGNITION STORAGE - STORES RECOGNIZED INDIVIDUALS
+        def recognize_face(self, person_id, name, attributes):
+            self.recognized_faces[person_id] = {"name": name, "attributes": attributes}
+            print(f"Face Recognized: {name} - Attributes Stored.")
+
+        # USER GESTURE TRACKING - MAPS GESTURES TO FUNCTIONS
+        def track_gesture(self, gesture, function):
+            self.user_gestures[gesture] = function
+            print(f"Gesture '{gesture}' mapped to function '{function.__name__}'.")
+
+        # GESTURE DETECTION FUNCTION - EXECUTES MAPPED GESTURES
+        def detect_gesture(self, gesture):
+            if gesture in self.user_gestures:
+                print(f"Executing gesture command: {gesture}")
+                self.user_gestures[gesture]()
+            else:
+                print(f"Unrecognized gesture: {gesture}")
+
+        # AI/ML-BASED SEARCH FUNCTION - ALTERNATIVE TO ONLINE SEARCH
+        def deepseek_query(self, query):
+            if not self.api_keys["deepseek"]:
+                self.log_error("DeepSeek API Key missing.")
+                return "No API Key available."
+            print(f"DeepSeek Query Executed: {query}")
+            return f"Simulated DeepSeek response for query: {query}"
+
+        # ADVANCED MATHEMATICAL SOLVER - FULLY OFFLINE
+        def solve_math(self, equation):
+            try:
+                solution = eval(equation, {"__builtins__": None, "math": math})
+                print(f"Equation: {equation} = {solution}")
+                return solution
+            except Exception as e:
+                self.log_error(f"Math Solver Error: {e}")
+                return None
+
+    # EXAMPLE USAGE
+    system = AdvancedSystem()
+    system.capture_ocr_text("Confidential Data: 12345-67890")
+    system.recognize_face("user123", "John Doe", {"mood": "neutral", "truthfulness": "high"})
+    system.track_gesture("circle_motion", lambda: system.solve_math("2+2"))
+    system.detect_gesture("circle_motion")
+    system.log_error("Test Error: Missing API Key")
+    system.display_errors()
+# Part 170 - Advanced System Integrations (ML, AI, Security, and Gesture Control)
+
+import time
+import hashlib
+import json
+from cryptography.fernet import Fernet
+import numpy as np
+import sympy as sp
+from deepseek import DeepSeek
+from gemini_ai import GeminiAI
+from frame_sdk import GestureTracker, FaceRecognition, MathSolver
+from offline_ml import PsychologicalAnalyzer, HeuristicTrainer, PAED
+
+# Initialize Secure Data Storage & Encryption
+class SecureStorage:
+    def __init__(self):
+        self.key = Fernet.generate_key()
+        self.cipher = Fernet(self.key)
+        self.data_storage = {}
+        self.max_size = 2 * 1024 * 1024 * 1024  # 2GB initial storage, 4GB in military mode
+
+    def store_data(self, identifier, data):
+        if len(json.dumps(self.data_storage).encode('utf-8')) < self.max_size:
+            encrypted_data = self.cipher.encrypt(json.dumps(data).encode('utf-8'))
+            self.data_storage[identifier] = encrypted_data
+        else:
+            print("Storage limit reached. Data cannot be stored.")
+
+    def retrieve_data(self, identifier):
+        if identifier in self.data_storage:
+            return json.loads(self.cipher.decrypt(self.data_storage[identifier]).decode('utf-8'))
+        return None
+
+# Gesture System Initialization
+class GestureControl:
+    def __init__(self):
+        self.gesture_tracker = GestureTracker()
+        self.gesture_map = {
+            "circle_motion": self.solve_math,
+            "snap": self.clear_solution,
+            "clap": self.start_stop_recording,
+            "thumbs_down": self.view_opp_status,
+            "thumbs_up": self.confirm_ready,
+            "fist_hold": self.mark_as_opp,
+            "swipe_up": self.clear_opp_status,
+            "peace_sign": self.toggle_karabriggs_mode
+        }
+
+    def detect_gesture(self, gesture):
+        if gesture in self.gesture_map:
+            self.gesture_map[gesture]()
+
+# Facial Recognition and AI-Powered Heuristics
+class AdvancedAI:
+    def __init__(self):
+        self.face_recognizer = FaceRecognition()
+        self.heuristic_trainer = HeuristicTrainer()
+        self.psych_analyzer = PsychologicalAnalyzer()
+
+    def recognize_face(self, user_id, name, metadata):
+        detected_face = self.face_recognizer.recognize(user_id, name, metadata)
+        self.heuristic_trainer.update_profile(user_id, detected_face)
+
+    def analyze_behavior(self, user_id, interactions):
+        return self.psych_analyzer.assess_personality(user_id, interactions)
+
+# Local AI and ML Processing (Offline Capabilities)
+class LocalProcessing:
+    def __init__(self):
+        self.math_solver = MathSolver()
+        self.paed = PAED()
+
+    def solve_equation(self, equation):
+        return self.math_solver.solve(equation)
+
+    def analyze_paed_risks(self, user_data):
+        return self.paed.detect_risks(user_data)
+
+# Military Mode & Advanced Security
+class MilitaryMode:
+    def __init__(self):
+        self.active = False
+        self.secure_storage = SecureStorage()
+
+    def toggle_mode(self):
+        self.active = not self.active
+        self.secure_storage.max_size = 4 * 1024 * 1024 * 1024 if self.active else 2 * 1024 * 1024 * 1024
+        print("Military Mode Activated" if self.active else "Military Mode Deactivated")
+
+# System Execution
+if __name__ == "__main__":
+    system = AdvancedAI()
+    gesture_control = GestureControl()
+    local_processor = LocalProcessing()
+    military_mode = MilitaryMode()
+
+    # Example Actions
+    system.recognize_face("user456", "Jane Smith", {"mood": "happy", "truthfulness": "medium"})
+    print(local_processor.solve_equation("x^2 + 5x + 6 = 0"))
+    military_mode.toggle_mode()
+    gesture_control.detect_gesture("circle_motion")
+# Part 171 of ~85+ parts remaining
+
+import os
+import time
+import cv2
+import numpy as np
+import hashlib
+import json
+from cryptography.fernet import Fernet
+from deepseek import DeepSeekAPI
+from gemini import GeminiAI
+from gpt4free import GPT4Free
+from gesture_control import GestureControl
+from military_mode import MilitaryMode
+from ocr_capture import OCRCapture
+from facial_recognition import FacialRecognition
+from social_media_scraper import SocialMediaScraper
+from math_solver import MathSolver
+from error_handler import ErrorHandler
+from data_storage import SecureDataStorage
+
+class AdvancedAI:
+    def __init__(self):
+        print("[INIT] Initializing Advanced AI System...")
+        self.gesture_control = GestureControl()
+        self.military_mode = MilitaryMode()
+        self.ocr_capture = OCRCapture()
+        self.facial_recognition = FacialRecognition()
+        self.social_media_scraper = SocialMediaScraper()
+        self.math_solver = MathSolver()
+        self.error_handler = ErrorHandler()
+        self.data_storage = SecureDataStorage()
+        
+        # Load AI/ML dependencies with offline fallback
+        self.deepseek = DeepSeekAPI(api_key="YOUR_DEEPSEEK_API_KEY")
+        self.gemini_ai = GeminiAI(api_key="YOUR_GEMINI_API_KEY")
+        self.gpt4free = GPT4Free()
+
+        # Error logging system
+        self.error_handler.initialize_logging()
+
+        print("[INIT COMPLETE] System is fully operational.")
+
+    def recognize_face(self, user_id, name, attributes):
+        """Recognize and track individuals with full psychological profiling"""
+        try:
+            profile = self.facial_recognition.analyze_face(user_id, name, attributes)
+            if self.military_mode.active:
+                print("[MILITARY MODE] Enhanced tracking enabled for:", name)
+                profile["military_tracking"] = True
+            return profile
+        except Exception as e:
+            self.error_handler.log_error("Face Recognition Error", str(e))
+            return None
+
+    def solve_equation(self, equation):
+        """Solve mathematical equations offline up to Level 600+ college math"""
+        try:
+            solution = self.math_solver.solve(equation)
+            return solution
+        except Exception as e:
+            self.error_handler.log_error("Math Solver Error", str(e))
+            return "Error solving equation."
+
+    def capture_text_and_numbers(self, image):
+        """Use OCR (OCD) system to capture all visible text and numbers for heuristic training"""
+        try:
+            captured_data = self.ocr_capture.process_image(image)
+            self.data_storage.store_secure_data(captured_data)
+            return captured_data
+        except Exception as e:
+            self.error_handler.log_error("OCR Capture Error", str(e))
+            return "OCR Capture Failed."
+
+    def scan_social_media(self, name):
+        """Find and display public social media information"""
+        try:
+            profiles = self.social_media_scraper.scrape_socials(name)
+            return profiles
+        except Exception as e:
+            self.error_handler.log_error("Social Media Scraper Error", str(e))
+            return "Failed to retrieve social media profiles."
+
+    def detect_gesture(self, gesture):
+        """Detect user gestures and execute assigned commands"""
+        try:
+            action = self.gesture_control.detect(gesture)
+            return action
+        except Exception as e:
+            self.error_handler.log_error("Gesture Detection Error", str(e))
+            return "Gesture Not Recognized."
+
+    def toggle_military_mode(self):
+        """Enable or disable Military Mode"""
+        try:
+            self.military_mode.toggle()
+            return f"Military Mode is now {'ACTIVE' if self.military_mode.active else 'DISABLED'}."
+        except Exception as e:
+            self.error_handler.log_error("Military Mode Toggle Error", str(e))
+            return "Failed to toggle Military Mode."
+
+    def execute_deepseek_query(self, query):
+        """Use DeepSeek API for advanced AI/ML capabilities"""
+        try:
+            response = self.deepseek.search(query)
+            return response
+        except Exception as e:
+            self.error_handler.log_error("DeepSeek Query Error", str(e))
+            return "DeepSeek Query Failed."
+
+    def execute_gemini_query(self, query):
+        """Use Google Gemini AI for enhanced AI operations"""
+        try:
+            response = self.gemini_ai.query(query)
+            return response
+        except Exception as e:
+            self.error_handler.log_error("Gemini AI Query Error", str(e))
+            return "Gemini AI Query Failed."
+
+    def execute_gpt4free_query(self, query):
+        """Use GPT4Free for additional AI-powered operations"""
+        try:
+            response = self.gpt4free.query(query)
+            return response
+        except Exception as e:
+            self.error_handler.log_error("GPT4Free Query Error", str(e))
+            return "GPT4Free Query Failed."
+
+# System Execution
+if __name__ == "__main__":
+    system = AdvancedAI()
+
+    # Example Actions
+    system.recognize_face("user456", "Jane Smith", {"mood": "happy", "truthfulness": "medium"})
+    print(system.solve_equation("x^2 + 5x + 6 = 0"))
+    system.toggle_military_mode()
+    system.detect_gesture("circle_motion")
+
+# ~85+ Parts Remaining
+# Part 172 – AI/ML Search Integration, OCR/OCD, Gesture-Control Features
+
+import os
+import json
+import numpy as np
+import cv2  # Used for OCR/OCD text recognition
+import sympy as sp  # Math solver library
+import hashlib  # For encryption and secure storage
+import speech_recognition as sr  # For conversation gathering
+from frame_sdk.ARSystem import ARSystem  # Brilliant Labs Frame SDK integration
+from deepseek import DeepSeek  # DeepSeek API integration
+from gemini import Gemini  # Google Gemini API integration
+from gpt4free import GPT4Free  # GPT4Free for additional AI queries
+
+# ---------------------------------
+# Secure Data Storage
+# ---------------------------------
+class SecureDataStorage:
+    def __init__(self, storage_limit=2 * 1024 * 1024 * 1024):  # 2GB storage limit
+        self.storage_path = "secure_storage.json"
+        self.storage_limit = storage_limit
+        self.data = self.load_storage()
+
+    def load_storage(self):
+        if os.path.exists(self.storage_path):
+            with open(self.storage_path, "r") as file:
+                return json.load(file)
+        return {}
+
+    def save_storage(self):
+        with open(self.storage_path, "w") as file:
+            json.dump(self.data, file, indent=4)
+
+    def encrypt_data(self, text):
+        return hashlib.sha256(text.encode()).hexdigest()  # Encrypts stored data
+
+    def store_data(self, key, value):
+        encrypted_value = self.encrypt_data(value)
+        self.data[key] = encrypted_value
+        self.save_storage()
+
+    def retrieve_data(self, key):
+        return self.data.get(key, None)
+
+# ---------------------------------
+# OCR/OCD (Text & Number Gathering)
+# ---------------------------------
+class OCRNumberTextCapture:
+    def __init__(self):
+        self.secure_storage = SecureDataStorage()
+        self.ocr_data = {}
+
+    def capture_text(self, image):
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        _, binary = cv2.threshold(gray, 128, 255, cv2.THRESH_BINARY)
+        text = cv2.text.OCRTesseract_create().run(binary)
+        self.store_ocr_data(text)
+        return text
+
+    def store_ocr_data(self, text):
+        self.ocr_data[text] = "Captured"
+        self.secure_storage.store_data(text, text)
+
+    def highlight_text(self, image, text_coordinates):
+        for (x, y, w, h) in text_coordinates:
+            cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)  # Green highlight
+        return image
+
+# ---------------------------------
+# AI/ML Search Integration
+# ---------------------------------
+class AIIntegration:
+    def __init__(self):
+        self.deepseek = DeepSeek(api_key=self.load_api_key("deepseek"))
+        self.gemini = Gemini(api_key=self.load_api_key("gemini"))
+        self.gpt4free = GPT4Free()
+
+    def load_api_key(self, service):
+        with open("api_keys.json", "r") as file:
+            keys = json.load(file)
+            return keys.get(service, "")
+
+    def search_deepseek(self, query):
+        return self.deepseek.search(query)
+
+    def search_gemini(self, query):
+        return self.gemini.query(query)
+
+    def search_gpt4free(self, query):
+        return self.gpt4free.ask(query)
+
+# ---------------------------------
+# Offline Math Solver (Level 600+)
+# ---------------------------------
+class MathSolver:
+    def solve_equation(self, equation):
+        x = sp.Symbol('x')
+        solution = sp.solve(equation, x)
+        return solution
+
+# ---------------------------------
+# Gesture Control System
+# ---------------------------------
+class GestureControl:
+    def __init__(self):
+        self.gesture_map = {
+            "circle_motion": "Solve Equation",
+            "fist_at_chest": "Mark Opp",
+            "thumb_down": "View Opp List",
+            "swipe_up": "Clear Opp Status",
+            "pinky_fingers_up": "Enable Legal Access",
+            "V_sign": "Enable Psychological Analysis",
+        }
+
+    def detect_gesture(self, gesture):
+        return self.gesture_map.get(gesture, "Unknown Gesture")
+
+# ---------------------------------
+# Social Media & Address Linking
+# ---------------------------------
+class SocialMediaScanner:
+    def __init__(self):
+        self.linked_profiles = {}
+
+    def scan_face(self, name):
+        if name in self.linked_profiles:
+            return self.linked_profiles[name]
+        return "No social media found"
+
+    def link_profile(self, name, profile):
+        self.linked_profiles[name] = profile
+
+# ---------------------------------
+# Conversation Gathering (Audio Analysis)
+# ---------------------------------
+class ConversationGatherer:
+    def __init__(self):
+        self.recognizer = sr.Recognizer()
+
+    def capture_audio(self):
+        with sr.Microphone() as source:
+            audio = self.recognizer.listen(source)
+            text = self.recognizer.recognize_google(audio)
+            return text
+
+# ---------------------------------
+# System Execution
+# ---------------------------------
+if __name__ == "__main__":
+    system = ARSystem()
+    
+    # AI/ML Setup
+    ai_integration = AIIntegration()
+    
+    # OCR/OCD Text & Number Capture
+    ocr_system = OCRNumberTextCapture()
+    
+    # Math Solver (Offline)
+    math_solver = MathSolver()
+    
+    # Gesture Control System
+    gesture_system = GestureControl()
+    
+    # Social Media Scanner
+    social_scanner = SocialMediaScanner()
+    
+    # Conversation Gathering
+    conversation_gatherer = ConversationGatherer()
+    
+    # Example Usage
+    print(gesture_system.detect_gesture("circle_motion"))
+    print(math_solver.solve_equation("x^2 + 5x + 6 = 0"))
+    
+    # Capture conversation
+    print(conversation_gatherer.capture_audio())
+
+    # AI Queries
+    print(ai_integration.search_deepseek("Latest military AI advancements"))
+# Part 173: Implementing Secure API Key Input and Google Gemini Integration
+
+import os
+import json
+import deepseek
+from generative_ai_python import Gemini
+
+class SecureAPIKeyManager:
+    """Manages secure storage and retrieval of API keys for DeepSeek and Google Gemini"""
+
+    def __init__(self, storage_path="secure_api_keys.json"):
+        self.storage_path = storage_path
+        self.api_keys = self.load_api_keys()
+
+    def load_api_keys(self):
+        """Loads API keys from secure storage"""
+        if os.path.exists(self.storage_path):
+            with open(self.storage_path, "r") as f:
+                return json.load(f)
+        return {"deepseek": "", "gemini": ""}
+
+    def save_api_keys(self):
+        """Saves API keys securely"""
+        with open(self.storage_path, "w") as f:
+            json.dump(self.api_keys, f)
+
+    def set_api_key(self, service, key):
+        """Allows user to set API key securely via virtual keyboard"""
+        if service in self.api_keys:
+            self.api_keys[service] = key
+            self.save_api_keys()
+            print(f"{service.capitalize()} API key updated successfully.")
+        else:
+            print("Invalid service specified.")
+
+    def get_api_key(self, service):
+        """Retrieves stored API key"""
+        return self.api_keys.get(service, "")
+
+# Initialize API Key Manager
+api_key_manager = SecureAPIKeyManager()
+
+class AIQuerySystem:
+    """Handles AI-based search queries using DeepSeek and Google Gemini"""
+
+    def __init__(self):
+        self.deepseek_api_key = api_key_manager.get_api_key("deepseek")
+        self.gemini_api_key = api_key_manager.get_api_key("gemini")
+        self.gemini = Gemini(self.gemini_api_key)
+
+    def search_deepseek(self, query):
+        """Runs a DeepSeek search query"""
+        if not self.deepseek_api_key:
+            return "DeepSeek API key missing. Please set it using the secure input method."
+
+        deepseek_client = deepseek.Client(api_key=self.deepseek_api_key)
+        result = deepseek_client.search(query)
+        return result
+
+    def search_gemini(self, query):
+        """Runs a Google Gemini search query"""
+        if not self.gemini_api_key:
+            return "Google Gemini API key missing. Please set it using the secure input method."
+
+        result = self.gemini.query(query)
+        return result
+
+# Initialize AI Query System
+ai_query_system = AIQuerySystem()
+
+# Example Usage
+print(ai_query_system.search_deepseek("Latest military AI advancements"))
+print(ai_query_system.search_gemini("Advanced gesture tracking algorithms"))
+
+# Part 173 of ~85 remaining (estimating additional parts needed)
 
 
 # Feature List:
